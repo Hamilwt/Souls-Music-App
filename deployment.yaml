@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: souls-deployment
+spec:
+  replicas: 2 # We're telling Kubernetes to run TWO copies of our app!
+  selector:
+    matchLabels:
+      app: souls
+  template:
+    metadata:
+      labels:
+        app: souls
+    spec:
+      containers:
+      - name: souls-container
+        image: souls:latest # The name of the Docker image you built.
+        imagePullPolicy: Never # Important: Tells K8s to use the local image, not download one.
+        ports:
+        - containerPort: 5000 # The port our Python app runs on inside the container.
